@@ -57,16 +57,6 @@ def render_field(fld: dict) -> str:
 
 
 def render_struct(s: dict, default_pack: int) -> str:
-    if not s["fields"]:
-        # Empty packet (no body on the wire). C++ can't have a zero-size
-        # struct, so emit a single UNUSED byte under pack(1) to match
-        # OpenFusion's convention.
-        return (
-            "#pragma pack(1)\n"
-            f"struct {s['name']} {{\n"
-            "\tuint8_t UNUSED;\n"
-            "};\n"
-        )
     pack = s.get("pack", default_pack)
     lines = [f"#pragma pack({pack})", f"struct {s['name']} {{"]
     for f in s["fields"]:
@@ -135,12 +125,8 @@ def render_header(doc: dict) -> str:
     parts.append("\n")
     for s in ordered:
         name = s["name"]
-        # For empty packets we emitted a single UNUSED byte under pack(1),
-        # so sizeof should be 1 (or 0 if the compiler allows zero-size).
-        size = 1 if not s["fields"] else s["size"]
         parts.append(
-            f"static_assert(sizeof({name}) == {size} "
-            f"|| sizeof({name}) == 0);\n"
+            f"static_assert(sizeof({name}) == {s['size']});\n"
         )
     return "".join(parts)
 

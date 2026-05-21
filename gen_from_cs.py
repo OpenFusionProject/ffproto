@@ -194,11 +194,17 @@ def parse_file(path: Path) -> Iterable[Struct]:
         for fm in RE_FIELD.finditer(body):
             s.fields.append(parse_field(fm))
         # If no Size attribute and we found public fields, this isn't a
-        # wire struct we know how to describe — skip. Empty placeholder
-        # structs (no Size, no public fields, just the decompiler's
-        # private _0024PRIVATE_0024 byte) are kept as empty packets.
+        # wire struct we know how to describe — skip.
         if size_m is None and s.fields:
             continue
+        # Empty placeholder structs (no public fields, just the C#
+        # decompiler's private _0024PRIVATE_0024 byte) carry an explicit
+        # padding byte in the IR so consumers don't have to special-case
+        # zero-sized structs. The byte is real: it's what the client
+        # actually puts on the wire (Marshal.SizeOf == 1).
+        if not s.fields:
+            s.fields.append(Field(name="_unused", type="u8"))
+            s.size = 1
         yield s
 
 

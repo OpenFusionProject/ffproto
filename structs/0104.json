@@ -1708,8 +1708,13 @@
     },
     {
       "name": "sP_CL2FE_REQ_CHANNEL_INFO",
-      "size": 0,
-      "fields": []
+      "size": 1,
+      "fields": [
+        {
+          "name": "_unused",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "sP_CL2FE_REQ_CHARGE_NANO_STAMINA",
@@ -1829,8 +1834,13 @@
     },
     {
       "name": "sP_CL2FE_REQ_GET_BUDDY_STATE",
-      "size": 0,
-      "fields": []
+      "size": 1,
+      "fields": [
+        {
+          "name": "_unused",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "sP_CL2FE_REQ_GET_BUDDY_STYLE",
@@ -1848,8 +1858,13 @@
     },
     {
       "name": "sP_CL2FE_REQ_GET_GROUP_STYLE",
-      "size": 0,
-      "fields": []
+      "size": 1,
+      "fields": [
+        {
+          "name": "_unused",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "sP_CL2FE_REQ_GET_MEMBER_STYLE",
@@ -2231,8 +2246,13 @@
     },
     {
       "name": "sP_CL2FE_REQ_PC_CHANNEL_NUM",
-      "size": 0,
-      "fields": []
+      "size": 1,
+      "fields": [
+        {
+          "name": "_unused",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "sP_CL2FE_REQ_PC_COMBAT_BEGIN",
@@ -2277,8 +2297,13 @@
     },
     {
       "name": "sP_CL2FE_REQ_PC_EMAIL_UPDATE_CHECK",
-      "size": 0,
-      "fields": []
+      "size": 1,
+      "fields": [
+        {
+          "name": "_unused",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "sP_CL2FE_REQ_PC_ENTER",
@@ -2517,8 +2542,13 @@
     },
     {
       "name": "sP_CL2FE_REQ_PC_GROUP_LEAVE",
-      "size": 0,
-      "fields": []
+      "size": 1,
+      "fields": [
+        {
+          "name": "_unused",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "sP_CL2FE_REQ_PC_ITEM_COMBINATION",
@@ -3780,13 +3810,23 @@
     },
     {
       "name": "sP_CL2FE_REQ_PC_VEHICLE_OFF",
-      "size": 0,
-      "fields": []
+      "size": 1,
+      "fields": [
+        {
+          "name": "_unused",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "sP_CL2FE_REQ_PC_VEHICLE_ON",
-      "size": 0,
-      "fields": []
+      "size": 1,
+      "fields": [
+        {
+          "name": "_unused",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "sP_CL2FE_REQ_PC_VENDOR_BATTERY_BUY",
@@ -4594,8 +4634,13 @@
     },
     {
       "name": "sP_CL2LS_REQ_SHARD_LIST_INFO",
-      "size": 0,
-      "fields": []
+      "size": 1,
+      "fields": [
+        {
+          "name": "_unused",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "sP_CL2LS_REQ_SHARD_SELECT",
@@ -5871,8 +5916,13 @@
     },
     {
       "name": "sP_FE2CL_PC_GROUP_LEAVE_SUCC",
-      "size": 0,
-      "fields": []
+      "size": 1,
+      "fields": [
+        {
+          "name": "_unused",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "sP_FE2CL_PC_GROUP_MEMBER_INFO",
@@ -6962,8 +7012,13 @@
     },
     {
       "name": "sP_FE2CL_PC_VEHICLE_OFF_SUCC",
-      "size": 0,
-      "fields": []
+      "size": 1,
+      "fields": [
+        {
+          "name": "_unused",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "sP_FE2CL_PC_VEHICLE_ON_FAIL",
@@ -6977,8 +7032,13 @@
     },
     {
       "name": "sP_FE2CL_PC_VEHICLE_ON_SUCC",
-      "size": 0,
-      "fields": []
+      "size": 1,
+      "fields": [
+        {
+          "name": "_unused",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "sP_FE2CL_PC_ZIPLINE",
@@ -7288,18 +7348,33 @@
     },
     {
       "name": "sP_FE2CL_REP_EP_RANK_DETAIL",
-      "size": 0,
-      "fields": []
+      "size": 1,
+      "fields": [
+        {
+          "name": "_unused",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "sP_FE2CL_REP_EP_RANK_LIST",
-      "size": 0,
-      "fields": []
+      "size": 1,
+      "fields": [
+        {
+          "name": "_unused",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "sP_FE2CL_REP_EP_RANK_PC_INFO",
-      "size": 0,
-      "fields": []
+      "size": 1,
+      "fields": [
+        {
+          "name": "_unused",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "sP_FE2CL_REP_GET_BUDDY_LOCATION_FAIL",
@@ -7810,8 +7885,13 @@
     },
     {
       "name": "sP_FE2CL_REP_PC_BUDDY_WARP_SAME_SHARD_SUCC",
-      "size": 0,
-      "fields": []
+      "size": 1,
+      "fields": [
+        {
+          "name": "_unused",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "sP_FE2CL_REP_PC_CHANGE_LEVEL",
@@ -9716,8 +9796,13 @@
     },
     {
       "name": "sP_FE2CL_REP_PC_WARP_CHANNEL_SUCC",
-      "size": 0,
-      "fields": []
+      "size": 1,
+      "fields": [
+        {
+          "name": "_unused",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "sP_FE2CL_REP_PC_WARP_USE_NPC_FAIL",
@@ -10384,8 +10469,13 @@
     },
     {
       "name": "sP_FE2CL_REP_SHINY_PICKUP_FAIL",
-      "size": 0,
-      "fields": []
+      "size": 1,
+      "fields": [
+        {
+          "name": "_unused",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "sP_FE2CL_REP_SHINY_PICKUP_SUCC",
@@ -10695,8 +10785,13 @@
     },
     {
       "name": "sP_LS2CL_REP_CHAR_SELECT_SUCC",
-      "size": 0,
-      "fields": []
+      "size": 1,
+      "fields": [
+        {
+          "name": "_unused",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "sP_LS2CL_REP_CHECK_CHAR_NAME_FAIL",
@@ -10921,8 +11016,13 @@
     },
     {
       "name": "sP_LS2CL_REP_VERSION_CHECK_SUCC",
-      "size": 0,
-      "fields": []
+      "size": 1,
+      "fields": [
+        {
+          "name": "_unused",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "sP_LS2CL_REQ_LIVE_CHECK",

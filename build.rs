@@ -135,14 +135,9 @@ fn render_version_module(path: &Path, module: &str, out: &mut String) {
     // Per-struct compile-time size assertions catch IR drift.
     for s in &ordered {
         let name = s["name"].as_str().unwrap();
-        let fields_empty = s["fields"].as_array().unwrap().is_empty();
-        let size = if fields_empty {
-            0
-        } else {
-            match s.get("size").and_then(|v| v.as_u64()) {
-                Some(n) => n as usize,
-                None => continue,
-            }
+        let size = match s.get("size").and_then(|v| v.as_u64()) {
+            Some(n) => n as usize,
+            None => continue,
         };
         out.push_str(&format!(
             "    const _: () = assert!(::core::mem::size_of::<{name}>() == {size});\n"
@@ -197,14 +192,6 @@ fn render_struct(s: &Value, default_pack: u32, out: &mut String) {
     let name = s["name"].as_str().unwrap();
     let fields = s["fields"].as_array().unwrap();
 
-    if fields.is_empty() {
-        out.push_str("    #[repr(C)]\n");
-        out.push_str("    #[derive(Debug, Copy, Clone, Default)]\n");
-        out.push_str(&format!("    pub struct {name};\n"));
-        out.push_str(&format!("    impl FFPacket for {name} {{}}\n"));
-        return;
-    }
-
     let pack = s
         .get("pack")
         .and_then(|v| v.as_u64())
@@ -220,9 +207,6 @@ fn render_struct(s: &Value, default_pack: u32, out: &mut String) {
     }
     out.push_str("    }\n");
     out.push_str(&format!("    impl FFPacket for {name} {{}}\n"));
-    // Zero-initialized Default. Sound because every field is a primitive
-    // integer/float, a fixed-size array of same, or a nested generated
-    // struct -- all of which accept the all-zero bit pattern.
     out.push_str(&format!(
         "    impl Default for {name} {{\n        fn default() -> Self {{ unsafe {{ ::core::mem::zeroed() }} }}\n    }}\n"
     ));
