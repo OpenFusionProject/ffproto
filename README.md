@@ -45,9 +45,10 @@ Each struct has a name, size, padding (can be omitted and inherited from default
 
 This repo includes a Python script `gen_from_cs.py` that can be pointed to a folder of FF structs defined in C# to generate a JSON file containing the intermediate representation (IR) of those structs. The script uses regular expressions to parse the C# code and extract the relevant information about each struct and its fields.
 
-`gen_cs.py` does the opposite, taking a JSON file in the IR format and generating C# struct definitions from it. This is used to ensure that the generated C# code matches the original struct definitions exactly.
-
-`gen_cpp.py` generatese a C++ header file containing struct definitions based on the JSON IR.
+On the other end of things, there are scripts to generate code in various languages from the JSON IR:
+- `gen_cs.py` generates C# struct definitions from the JSON IR. This is used to ensure that the generated C# code matches the original struct definitions exactly.
+- `gen_cpp.py` generatese a C++ header file containing struct definitions from the JSON IR.
+- `gen_python.py` generates a Python module of ctypes.Structure classes from the JSON IR.
 
 ## Rust Crate
 
