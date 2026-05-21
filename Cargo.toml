@@ -1,0 +1,18 @@
+[package]
+name = "ffproto"
+version = "1.0.0"
+authors = ["OpenFusion Contributors"]
+edition = "2021"
+license = "MIT"
+
+include = [
+    "src/**/*.rs",
+    "build.rs",
+    "structs/*.json",
+    "Cargo.toml",
+    "README*",
+    "LICENSE*",
+]
+
+[build-dependencies]
+serde_json = "1"
