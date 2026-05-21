@@ -47,9 +47,9 @@ This repo includes a Python script `gen_from_cs.py` that can be pointed to a fol
 
 On the other end of things, there are scripts to generate code in various languages from the JSON IR:
 - `gen_cs.py` generates C# struct definitions from the JSON IR. This is used to ensure that the generated C# code matches the original struct definitions exactly.
-- `gen_cpp.py` generatese a C++ header file containing struct definitions from the JSON IR.
+- `gen_c.py` generatese a C header file containing struct definitions from the JSON IR.
 - `gen_python.py` generates a Python module of ctypes.Structure classes from the JSON IR.
 
 ## Rust Crate
 
-This repo also includes a Rust crate `ffproto` that generates Rust struct definitions for the types in the JSON IR **at compile time**, with one module per JSON.
+This repo also includes a Rust crate `ffproto` that generates Rust struct definitions for the types in the JSON IR **at compile time**, with one module per JSON in the `structs` folder.

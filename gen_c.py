@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate a single C++ header from a packets.json IR document.
+"""Generate a single C header from a packets.json IR document.
 
 Emits a header in the same style as OpenFusion's hand-maintained
 structs/*.hpp files: pack(push)/pack(pop) wrapping, per-struct
@@ -18,7 +18,7 @@ import json
 import sys
 from pathlib import Path
 
-# IR primitive -> C++ type
+# IR primitive -> C type
 PRIM_TO_CPP = {
     "i8":  "int8_t",
     "u8":  "uint8_t",
@@ -92,7 +92,7 @@ def topo_sort(structs: list[dict]) -> list[dict]:
         if name in emitted or name not in by_name:
             return
         if name in visiting:
-            # Cycle — emit anyway in original order; C++ won't compile,
+            # Cycle — emit anyway in original order; C won't compile,
             # but that's the user's problem to resolve.
             return
         visiting.add(name)
@@ -114,7 +114,7 @@ def render_header(doc: dict) -> str:
     ordered = topo_sort(structs)
 
     parts: list[str] = []
-    parts.append("/* generated from packets.json by gen_cpp.py */\n")
+    parts.append("/* generated from ffproto by gen_c.py */\n")
     parts.append("\n")
     parts.append("#pragma pack(push)\n")
     parts.append("\n")

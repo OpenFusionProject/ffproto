@@ -133,7 +133,7 @@ def render_module(doc: dict) -> str:
     ordered = topo_sort(structs)
 
     parts: list[str] = []
-    parts.append("# generated from packets.json by gen_py.py -- DO NOT EDIT\n")
+    parts.append("# generated from ffproto by gen_python.py\n")
     parts.append("import ctypes as _c\n")
     parts.append("\n")
     for s in ordered:

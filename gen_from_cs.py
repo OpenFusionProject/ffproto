@@ -8,7 +8,7 @@ Walks a directory of C# files, finds every
     public struct NAME { ... }
 
 and emits a single JSON document describing each struct's fields in a
-language-agnostic form suitable for codegen in C++/Python/Rust/etc.
+language-agnostic form suitable for codegen in C/C++/C#/Python/Rust/etc.
 
 JSON shape:
 
