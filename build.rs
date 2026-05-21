@@ -66,9 +66,7 @@ fn main() {
     }
 
     if found_root_reexport {
-        out.push_str(&format!(
-            "\npub use v{ROOT_REEXPORT_VERSION}::*;\n"
-        ));
+        out.push_str(&format!("\npub use v{ROOT_REEXPORT_VERSION}::*;\n"));
     } else {
         println!(
             "cargo:warning=ffproto: no structs/{ROOT_REEXPORT_VERSION}.json found; \
