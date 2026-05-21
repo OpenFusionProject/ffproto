@@ -314,6 +314,11 @@ def main() -> int:
         computed, _ = layout
         if computed != s.size:
             mismatches.append((s.name, s.size, computed))
+            # There are some mismatches due to stale annotations
+            # (like on sNanoTuneNeedItemInfo2CL in 1013).
+            # Warn, but tolerate without `--strict` and update the IR size to match the computed size.
+            if computed > s.size:
+                s.size = computed
 
     packs = {s.pack for s in structs}
     default_pack = 4 if 4 in packs else next(iter(packs))
