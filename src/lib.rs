@@ -2,8 +2,10 @@
 //! JSON files under `structs/` by `build.rs` at compile time.
 //!
 //! Each protocol version lives in its own module (`v0104`, `v0728`,
-//! `v1013`, ...). The `0104` version is additionally re-exported at
-//! the crate root.
+//! `v1013`, ...). `v0104` is the base and defines every struct; it is
+//! additionally re-exported at the crate root. The other version
+//! modules only contain the structs whose layout differs from the base
+//! — for anything else, use the base/crate-root definition.
 //!
 //! The IR JSON files are the source of truth; do not edit the
 //! generated structs directly.
