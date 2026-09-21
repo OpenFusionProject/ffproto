@@ -141,13 +141,48 @@ fn struct_refs(s: &Value) -> impl Iterator<Item = &str> {
         .map(|f| f["ref"].as_str().unwrap())
 }
 
-/// Canonical description of a struct's generated Rust definition. Equal
-/// fingerprints mean identical generated code, so one definition can
-/// stand in for the other.
-fn fingerprint(s: &Value, default_pack: u32) -> String {
+fn prim_align(ty: &str) -> Option<u32> {
+    Some(match ty {
+        "i8" | "u8" => 1,
+        "i16" | "u16" => 2,
+        "i32" | "u32" | "f32" => 4,
+        "i64" | "u64" | "f64" => 8,
+        _ => return None,
+    })
+}
+
+/// Alignment of every struct: its declared `pack` clamped to the widest
+/// alignment any of its fields actually needs. A `pack` wider than that
+/// is a no-op, so two structs with the same fields and the same clamped
+/// value are byte-identical even if their declared packing differs.
+fn struct_aligns(structs: &[Value], default_pack: u32) -> HashMap<String, u32> {
+    let mut aligns: HashMap<String, u32> = HashMap::new();
+    // Topological order guarantees nested structs are resolved first.
+    for s in topo_sort(structs) {
+        let widest = s["fields"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|f| match f["type"].as_str().unwrap() {
+                "wstr" => 2,
+                "struct" => *aligns.get(f["ref"].as_str().unwrap()).unwrap_or(&1),
+                other => {
+                    prim_align(other).unwrap_or_else(|| panic!("unsupported IR type {other:?}"))
+                }
+            })
+            .max()
+            .unwrap_or(1);
+        let align = effective_pack(&s, default_pack).min(widest);
+        aligns.insert(s["name"].as_str().unwrap().to_string(), align);
+    }
+    aligns
+}
+
+/// Canonical description of a struct's memory layout. Equal fingerprints
+/// mean one definition can stand in for the other.
+fn fingerprint(s: &Value, align: u32) -> String {
     let mut fp = format!(
-        "pack={};size={:?};",
-        effective_pack(s, default_pack),
+        "align={align};size={:?};",
         s.get("size").and_then(|v| v.as_u64())
     );
     for f in s["fields"].as_array().unwrap() {
@@ -163,18 +198,19 @@ fn fingerprint(s: &Value, default_pack: u32) -> String {
     fp
 }
 
-/// Names in `ver` that can be re-exported from `base` instead of
-/// redefined: same fingerprint as the base struct, and transitively
-/// every nested struct reference is shareable too.
+/// Names in `ver` that can be taken from `base` instead of redefined:
+/// same fingerprint as the base struct, and transitively every nested
+/// struct reference is shareable too.
 fn reusable_structs(base: &VersionDoc, ver: &VersionDoc) -> BTreeSet<String> {
+    let base_aligns = struct_aligns(&base.structs, base.default_pack);
+    let ver_aligns = struct_aligns(&ver.structs, ver.default_pack);
+
     let base_fps: HashMap<&str, String> = base
         .structs
         .iter()
         .map(|s| {
-            (
-                s["name"].as_str().unwrap(),
-                fingerprint(s, base.default_pack),
-            )
+            let name = s["name"].as_str().unwrap();
+            (name, fingerprint(s, base_aligns[name]))
         })
         .collect();
 
@@ -183,7 +219,7 @@ fn reusable_structs(base: &VersionDoc, ver: &VersionDoc) -> BTreeSet<String> {
         .iter()
         .filter(|s| {
             let name = s["name"].as_str().unwrap();
-            base_fps.get(name) == Some(&fingerprint(s, ver.default_pack))
+            base_fps.get(name) == Some(&fingerprint(s, ver_aligns[name]))
         })
         .map(|s| s["name"].as_str().unwrap().to_string())
         .collect();
